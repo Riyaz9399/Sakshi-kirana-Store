@@ -17,11 +17,7 @@ session_start();
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css" integrity="sha512-dPXYcDub/aeb08c63jRq/k6GaKccl256JQy/AnOq7CAnEZ9FzSL9wSbcZkMp4R26vBsMLFYH4kQ67/bbV8XaCQ==" crossorigin="anonymous" referrerpolicy="no-referrer" /> 
     <link rel="stylesheet" href="style.css">
     <style>
-      body {
-        background: linear-gradient(to right, #2193b0, #6dd5ed, #2193b0, #6dd5ed, #2193b0, #6dd5ed);
-        width:100vw;
-        height:100vh;
-      }
+    
       .card{
         border-color:2px solid black;
         box-shadow: 23px 34px 67px black;
@@ -65,28 +61,28 @@ session_start();
      <!-- go back to main -->
     <div class="container-fluid p-0">
             <!-- The first child  -->
-        <nav class="navbar navbar-expand-lg">
+        <nav class="navbar navbar-expand-lg bg-dark">
             <div class="container-fluid">
                 <img class="img-logo" src="icons\Logo.jpg">
-                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                 <button class="navbar-toggler bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
                  </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-3 mb-lg-0">
                        <li class="nav-item">
-                         <a class="nav-link active" aria-current="page" href="index.php">Home</a>
+                         <a class="nav-link active text-light" aria-current="page" href="index.php">Home</a>
                        </li>
                        <li class="nav-item">
-                         <a class="nav-link" href="display_all.php">Products</a>
+                         <a class="nav-link text-light" href="display_all.php">Products</a>
                        </li>
                        <li class="nav-item">
-                         <a class="nav-link" href="./user_Area/registration.php">Register</a>
+                         <a class="nav-link text-light" href="./user_Area/registration.php">Register</a>
                        </li>
                        <li class="nav-item">
-                         <a class="nav-link" href="#">Contact</a>
+                         <a class="nav-link text-light" href="#">Contact</a>
                        </li>
                        <li class="nav-item">
-                         <a class="nav-link" href="cart.php"> Carts<i class="bi bi-cart4"></i><sup> <?php number_of_cart_items();?></sup></a>
+                         <a class="nav-link text-light" href="cart.php"> Carts<i class="bi bi-cart4"></i><sup> <?php number_of_cart_items();?></sup></a>
                        </li>
                     </ul>
                     
@@ -98,11 +94,20 @@ session_start();
         <!-- Second Child -->
         <nav class="navbar navbar-expand-lg  navbar-dark bg-secondary">
             <ul class="navbar-nav me-auto">
-            <li class="nav-item">
-                <a class="nav-link " href="#">Welcome Guest</a>
-            </li>
+            
 
             <?php
+              if(!isset($_SESSION['username'])){
+                echo '<li class="nav-item">
+            <a class="nav-link" href="#">WELCOME GUEST</a>
+            </li>';
+            }else{
+               echo '<li class="nav-item">
+               <a class="nav-link" href="#">WELCOME '.$_SESSION['username'].'</a>
+               </li>';
+            }
+
+
              if(!isset($_SESSION['username'])){
               echo '<li class="nav-item">
       <a class="nav-link" href="user_Area\user_login.php">LOGIN</a>
@@ -149,15 +154,14 @@ session_start();
                                      <th> Operations</th> 
                                    </tr>";
                                      
-                      while ($row = mysqli_fetch_array($result)){
-                        $product_id = $row['product_Id'];
-                        $select_Price = "SELECT * FROM  `products` Where `product_Id` = '$product_id' ";
+                      while ($row = mysqli_fetch_assoc($result)){
+                        $product_id = $row['product_id'];
+                        $select_Price = "SELECT * FROM  `products` Where `product_id` = $product_id ";
                         
                         $result_product = mysqli_query($conn, $select_Price);
-                        $product_prices = array();
                         while ($row_product_price = mysqli_fetch_array($result_product)){
-                          $product_price[] = array($row_product_price["product_price"]);
-                          $totalprice_value_sum = array_sum($product_price );
+                          $product_price = array($row_product_price["product_price"]);
+                          $totalprice_value_sum = array_sum($product_price);
                           $totalprice_value = $row_product_price['product_price'];
                           $productTable_Title = $row_product_price['product_title'];
                           $product_Image = $row_product_price['Image_1'];
@@ -166,7 +170,7 @@ session_start();
                                     <tr>
                                         <td>  $productTable_Title</td>
                                         <td><image class='cart_image' src='admin/products_images/$product_Image' alt=''/></td>
-                                        <td><input type='text' name='cart_quantity' placeholder=' $totalprice_value_sum ' id=''  class='form-input w-50'/> </td>
+                                        <td><input type='text' name='cart_quantity' placeholder=' ' id='' value='$totalprice_value_sum ' class='form-input w-50'/> </td>
                                         <td> $totalprice_value </td>
                                         <td><input type='checkbox' name='removeitem[]'value='$product_id'/></td>
                                         <td>   
@@ -179,21 +183,11 @@ session_start();
                       }
                      
                     }
-                      
                     else{
                       echo '<h2 class=" text-center text-danger fst-italic">Your cart is empty cart</h2>';
                     }
                     
-                      $get_ip_address = getIPAddress();
-                      $subtotal = 0;
-                      if(isset($_POST['Update'])){
-                       $cart_quantity = $_POST['cart_quantity'];                  
-                        $update_Queruy = "UPDATE `carts_detail` SET `quantity`='$cart_quantity' Where  `Ip_Address` = '$get_ip_address'" ;
-                        $result = mysqli_query($conn,$update_Queruy);                                 
-                        $totalprice_value =  (int)$totalprice_value * (int)$cart_quantity;
-                         $subtotal +=  $totalprice_value;
-                      }    
-
+                      
                     ?>
                 </table>
                     </form>
@@ -201,6 +195,19 @@ session_start();
                     <!-- Function for removing the items from the cart -->
                        
                       <?php
+
+                        $get_ip_address = getIPAddress();
+                        $subtotal = 0;
+                        if(isset($_POST['Update'])){
+                         $cart_quantity = $_POST['cart_quantity'];                  
+                          $update_Queruy = "UPDATE `carts_detail` SET `quantity`='$cart_quantity' Where  `Ip_Address` = '$get_ip_address'" ;
+                          $result = mysqli_query($conn,$update_Queruy); 
+                          while($data = mysqli_fetch_array($result))   {
+                            $totalprice_value =  (int)$totalprice_value * (int)$cart_quantity;
+                            $subtotal +=  $totalprice_value;
+                          }                             
+                        }    
+
                       
                          $ip = getIPAddress();  
                          $cart_Query = "SELECT * FROM `carts_detail` WHERE `Ip_Address` =  '$ip' ";
@@ -228,7 +235,7 @@ session_start();
                           if(isset ($_POST['Remove'])){
                             foreach($_POST['removeitem'] as $remove_id){
                               echo $remove_id;
-                              $delete_Query = "DELETE  FROM  `carts_detail` WHERE `product_Id` = $remove_id ";
+                              $delete_Query = "DELETE  FROM  `carts_detail` WHERE `product_id` = $remove_id ";
                               $result = mysqli_query($conn, $delete_Query); 
                             }
                           }

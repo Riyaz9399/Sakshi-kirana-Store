@@ -139,14 +139,14 @@ include("../db.php");
                     if($product_Title != "" && $product_Description != "" && $product_Keyword != "" && $categories_ID != "" && $brands_Id != "" && $Product_Price != "" && $product_status != "") {
                         
                         // Specify target directory for image upload (use forward slashes for paths in PHP)
-                        $target_dir = "C:/newXaamp/htdocs/Ecommerce website/admin/products_images/";
+                        $target_dir = "C:/xampp/htdocs/Sakshi-kirana-Store\admin/products_images/";
                         $target_file = $target_dir . basename($Image1);
                 
                         // Move uploaded file to target directory
                         if(move_uploaded_file($temp_Image1, $target_file)) {
                 
                             // Insert product details into database
-                            include("../includes/db.php"); // Ensure database connection is included
+                            include("../db.php"); // Ensure database connection is included
                             $insertProduct = "INSERT INTO `products` (`product_title`, `product_description`, `product_keyword`, `categories_Id`, `brands_Id`, `Image_1`, `product_price`, `Status`, `Date`) 
                                               VALUES ('$product_Title', '$product_Description', '$product_Keyword', '$categories_ID', '$brands_Id', '$Image1', '$Product_Price', '$product_status', NOW())";
                             

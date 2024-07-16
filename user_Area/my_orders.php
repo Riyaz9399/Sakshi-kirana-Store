@@ -26,7 +26,7 @@ require_once("../CommonFunction.php");
         $get_user = "SELECT * FROM `registration` Where `Username` = '$username'";
         $result = mysqli_query($conn,$get_user);
         $rowdata = mysqli_fetch_assoc($result);
-        $userId = $rowdata['User_ID'];
+        $userId = $rowdata['id'];
         // echo $userId;
     ?>
         
@@ -49,7 +49,7 @@ require_once("../CommonFunction.php");
             $result = mysqli_query($conn,$Get_orders_Table);
             $number = 1;
             while($row_orderdata = mysqli_fetch_array($result)){
-                $order_Id  = $row_orderdata['order_id'];
+                $order_Id  = $row_orderdata['Order_id'];
                 $amount_due = $row_orderdata['amount_due'];
                 $total_produts = $row_orderdata['Total_products'];
                 $Invoice_number = $row_orderdata['invoice_number'];

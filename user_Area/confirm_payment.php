@@ -5,7 +5,7 @@ session_start();
 if(isset($_GET["order_id"])){
    $order_id = $_GET['order_id'];
     /*Select data from database */
-    $select_data = "SELECT * FROM `order_table` WHERE `order_id` = '$order_id'";
+    $select_data = "SELECT * FROM `order_table` WHERE `Order_id` = $order_id";
     $result = mysqli_query($conn,$select_data);
     $data = mysqli_fetch_assoc($result);
     $Due_amount = $data['amount_due'];
@@ -16,7 +16,7 @@ if(isset($_POST['confirm_Payment'])){
  $pay_invoice_number = $_POST['invoice_number'];
  $pay_due_amount = $_POST['amount'];
  $pay_selected_Pay_method = $_POST['payment-mode'];
- $insert_payment_details = "INSERT INTO `payment_table`(`order_id`, `invoice_number`, `amount`, `payment_mode`, `Date`) VALUES ('$order_id','$pay_invoice_number','$pay_due_amount','$pay_selected_Pay_method',NOW())";
+ $insert_payment_details = "INSERT INTO `payment_table`(`order_id`, `invoice_number`, `amount_due`, `payment_mode`, `Date`) VALUES ('$order_id','$pay_invoice_number','$pay_due_amount','$pay_selected_Pay_method',NOW())";
  $result = mysqli_query($conn,$insert_payment_details);
  if($result){
     echo '<h2 class="text-center text-light bg-dark">Successfully payment is done</h2>';

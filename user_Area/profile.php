@@ -17,9 +17,7 @@ session_start();
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css" integrity="sha512-dPXYcDub/aeb08c63jRq/k6GaKccl256JQy/AnOq7CAnEZ9FzSL9wSbcZkMp4R26vBsMLFYH4kQ67/bbV8XaCQ==" crossorigin="anonymous" referrerpolicy="no-referrer" /> 
   
     <style>
-      body {
-        background: linear-gradient(to right, #2193b0, #6dd5ed, #2193b0, #6dd5ed, #2193b0, #6dd5ed);
-      }
+     
 
       .card-img-top{
         width:100%;
@@ -30,11 +28,11 @@ session_start();
         border-color:2px solid black;
         box-shadow: 23px 34px 67px black;
       }
-      .img-logo{
+       .img-logo{
         height: 5%;
         width: 5%;
         border-radius: 60%;
-        margin : 0 4px 0 2px;   
+        margin : 0 4px 0 2px;  
        }
        .nav-img{
         height:100%;
@@ -48,6 +46,16 @@ session_start();
         width:100px;
         object-fit:contain;
        }
+       .footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #17a2b8; /* bg-info color */
+    text-align: center;
+    padding: 10px 0;
+    color: white; /* Ensure text color is readable */
+}
        .modal {
       display: none;
       position: fixed;
@@ -102,10 +110,22 @@ session_start();
      <!-- go back to main -->
     <div class="container-fluid p-0">
             <!-- The first child  -->
-        <nav class="navbar navbar-expand-lg">
+        <nav class="navbar navbar-expand-lg bg-secondary">
             <div class="container-fluid">
-                <img class="img-logo" src="../icons\Logo.jpg">
-                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+
+                <?php
+                    $username = $_SESSION['username'];
+                    $username_image = "SELECT * FROM `registration` WHERE `Username` = '$username'";
+                    $result = mysqli_query($conn,$username_image );
+                      $row_image = mysqli_fetch_array( $result);
+                      
+                      $user_image =  $row_image['user_Image'];
+
+                echo "
+                        <img class='img-logo' src='../User_Images/$user_image'/>
+                "; 
+                ?>
+                 <button class="navbar-toggler bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
                  </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -225,7 +245,7 @@ session_start();
         <!-- Forth Child -->
          <div class="row">
             <div class="col-md-2 p-0">
-                <ul class="navbar-nav  text-center " style="height:100vh;">
+                <ul class="navbar-nav  text-center bg-dark" style="height:100vh;">
                 <li class="nav-item">
                          <a class="nav-link text-light  bg-dark" href="#"><h4>Your Profile</h4></a>
                 </li>
@@ -239,7 +259,7 @@ session_start();
                       $user_image =  $row_image['user_Image'];
 
                 echo "<li class='nav-item '>
-                         <a class='nav-link bg-info' href='#'><img class='nav-img' src='../User_Images/$user_image'/></a>
+                         <a class='nav-link ' href='profile.php'><img class='nav-img' src='../User_Images/$user_image'/></a>
                 </li>
                 ";
                 
@@ -280,7 +300,12 @@ session_start();
                       include("my_orders.php");
                     }else if(isset($_GET["Delete_account"])){
                       include("delete_Account.php");
-                    }else{
+                    }else if(isset($_GET["Logout.php"])){
+                        // echo '<script>alert("WE MISS YOU ");
+                        // window.location.href="../index.php";</script>';
+                        
+                    }
+                      else{
                         $username =  $_SESSION['username'];
                         echo "<div class='mx-10 my-10'><h2 class='text-center text-dark  '>WELCOME <span class='text-danger fst-italic'>$username</span> TO YOUR USER DASHBOARD </h2></div>";
                     }
@@ -294,10 +319,9 @@ session_start();
                
 
         <!--  last child -->
-         <div class="container-fluid p-0 bg-info footer text-dark text-center">
-    <p class="text-center">"Need assistance? Our customer support team is here to help you 24/7. Contact us anytime for any inquiries or support."</p>
+        <div class="container-fluid p-0 bg-dark footer text-dark text-center">
+    <p class="text-center text-light">"Need assistance? Our customer support team is here to help you 24/7. Contact us anytime for any inquiries or support."</p>
         </div>
-
 
     </div>
       

@@ -22,7 +22,7 @@ include("../CommonFunction.php");
  $get_USER =  "SELECT * FROM `registration` WHERE `user_Ip_address` = '$user_Ip_address' ";//AND  `Username` = '$_SESSION[username]'";
  $result = mysqli_query($conn,$get_USER );
  $Run_query = mysqli_fetch_array($result);
- $user_ID = $Run_query['User_ID'];
+ $user_ID = $Run_query['id'];
 
 ?>
 
@@ -35,6 +35,9 @@ include("../CommonFunction.php");
         </div>
         <div class="col-md-4 ">
             <a href="order.php?user_id=<?php echo $user_ID?>"><h2 class="text-center">Pay Offline</h2></a>
+        </div>
+        <div class="col-md-4 ">
+            <a href="../razorpay-sample-project/index.php"><h2 class="text-center">Pay Online</h2></a>
         </div>
     </div>
     </div>

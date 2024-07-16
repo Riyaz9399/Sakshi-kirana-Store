@@ -18,8 +18,8 @@ if(isset($_GET['user_id'])){
     $status = 'pending';
     $count_row = mysqli_num_rows($result);
     while($row_price = mysqli_fetch_array($result )){
-         $product_ID = $row_price['product_Id'];
-         $select_product = "SELECT * FROM `products` WHERE  `product_Id` = '$product_ID' ";
+         $product_ID = $row_price['product_id'];
+         $select_product = "SELECT * FROM `products` WHERE  `product_id` = '$product_ID' ";
          $product_result = mysqli_query($conn , $select_product);
             
          while($row_data_product = mysqli_fetch_array($product_result)){
@@ -64,8 +64,7 @@ if(isset($_GET['user_id'])){
     // delete items from carts
     $empty_cart = "DELETE FROM `carts_detail` WHERE `Ip_Address` =  '$get_ip_address'";
     $delete_cart = mysqli_query($conn , $empty_cart);
-
-
+    
 ?>
 
 

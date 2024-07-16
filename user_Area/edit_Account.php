@@ -6,7 +6,7 @@ if(isset($_GET["edit_Account"])){
   $select_query = "SELECT * FROM `registration` WHERE `Username` = '$user_session_name' ";
   $result = mysqli_query($conn,$select_query);
   $rowdata = mysqli_fetch_assoc($result);
-  $user_ID = $rowdata['User_ID'];
+  $user_ID = $rowdata['id'];
   $user_name = $rowdata['Username'];
   $user_email = $rowdata['email'];
   $user_image = $rowdata['user_Image'];
@@ -30,7 +30,7 @@ if(isset($_POST['Edit_account'])){
   $target_file = $target_dir.basename($update_Image);
 
   if (move_uploaded_file($update_Image_temp, $target_file)) {
-       $update_query = "UPDATE `registration` SET `Username`='$Update_username',`email`='$Update_email',`user_Image`='$update_Image',`user_address`=' $upadate_Address',`PHone_number`='$update_Phone',`Zip_code`='$user_Zipcode' WHERE  `User_ID` = '$user_ID'";
+       $update_query = "UPDATE `registration` SET `Username`='$Update_username',`email`='$Update_email',`user_Image`='$update_Image',`user_address`=' $upadate_Address',`PHone_number`='$update_Phone',`Zip_code`='$user_Zipcode' WHERE  `id` = '$user_ID'";
        $Upadte_user_info = mysqli_query($conn,$update_query);
      
        if ($Upadte_user_info ) {

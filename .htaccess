@@ -1,0 +1,11 @@
+# Disable directory listing
+Options -Indexes
+
+# Rewrite engine
+RewriteEngine On
+
+# Set custom rules if necessary
+RewriteBase /
+
+# Example: Redirect old URLs to new ones
+# Redirect 301 /old-page /new-page

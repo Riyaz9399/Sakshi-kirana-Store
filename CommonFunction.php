@@ -17,7 +17,7 @@ function getproduct(){
                       $result = mysqli_query($conn,$selectcardDetails);
                      while ($rowdata = mysqli_fetch_assoc($result)){
                         $cardpicture = $rowdata['Image_1'];
-                        $product_Id = $rowdata['product_Id'];
+                        $product_Id = $rowdata['product_id'];
                         $cardTitle = $rowdata['product_title'];
                         $carddescription = $rowdata['product_description'];
                         $product_Price = $rowdata['product_price'];
@@ -36,7 +36,7 @@ function getproduct(){
                                       <h5 class='card-title'>$cardTitle</h5>
                                       <p class='card-text'>$carddescription</p>
                                       <p class='card-text'> Price: $product_Price/- </p>
-                                      <a href='index.php?add_Cart= $product_Id' class='btn btn-primary'>Add Cart</a>
+                                      <a href='index.php?add_Cart=$product_Id' class='btn btn-primary'>ADD CART</a>
                                       <a href='products_Details.php?product_id=$product_Id' class='btn btn-secondary'>View Details </a>
                                     </div>
                                   </div>
@@ -252,7 +252,7 @@ function getproduct(){
       if(isset($_GET["add_Cart"]))
       $ip = getIPAddress();  
       $get_product_Id = $_GET['add_Cart'];
-      $select_QUERY = "SELECT * FROM `carts_detail` WHERE `Ip_Address` =  '$ip' AND `product_Id` = $get_product_Id"; 
+      $select_QUERY = "SELECT * FROM `carts_detail` WHERE `Ip_Address` =  '$ip' AND `product_Id` = '$get_product_Id'"; 
       $result = mysqli_query($conn,$select_QUERY);
       $count = mysqli_num_rows( $result);
       
@@ -298,7 +298,7 @@ function getproduct(){
        $product_prices = array();
 
       while ($row = mysqli_fetch_array($result)){
-        $product_id = $row['product_Id'];
+        $product_id = $row['product_id'];
         $select_Price = "SELECT * FROM  `products` Where `product_Id` = '$product_id'  ";
         $result_product = mysqli_query($conn, $select_Price);
         while ($row_product_price = mysqli_fetch_array($result_product)){
@@ -324,9 +324,9 @@ function getproduct(){
 
       $result = mysqli_query($conn,$get_details);
       while($rowdata = mysqli_fetch_array($result)){
-        $user_id = $rowdata['User_ID'];
+        $user_id = $rowdata['id'];
         if (!isset($_GET['edit_account']) && !isset($_GET['my_orders']) && !isset($_GET['Delete_account'])) {
-          $get_orders = "SELECT * FROM `order_table` WHERE `User_ID` = '$user_id' AND `Order_status` = 'pending'";
+          $get_orders = "SELECT * FROM `order_table` WHERE `User_ID` = '$user_id'  AND `Order_status` = 'pending'";
 
           // Debugging: Print query
           // echo "Query: $get_orders<br>";
@@ -349,7 +349,7 @@ function getproduct(){
                       $order_status = $row_data["Order_status"];
                       echo "<h3 class='text-center'> You have <span class='text-danger'> $row_Count</span> Pending Orders</h3>";
                   } else {
-                      echo "<h3 class='text-center'>You have <span class='text-danger'>0</span> Pending Orders</h3>";
+                      echo "<h3 class='text-center'>You have <span class='text-danger'> 0</span> Pending Orders</h3>";
                   }
               } else {
                   echo "<h3 class='text-center'>You have <span class='text-danger'>0</span> Pending Orders</h3>";

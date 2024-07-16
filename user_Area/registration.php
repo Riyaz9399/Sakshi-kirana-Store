@@ -135,7 +135,7 @@ include("../CommonFunction.php");
       if ($userPassword === $confirmPassword) {
           // Move uploaded file to the desired directory
 
-          $target_dir = "C:/newXaamp/htdocs/Ecommerce website/User_Images/";
+          $target_dir = "C:/xampp\htdocs/Sakshi-kirana-Store/User_Images/";
           $target_file = $target_dir.basename( $user_image);
   
 

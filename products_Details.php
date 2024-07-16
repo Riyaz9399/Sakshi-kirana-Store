@@ -109,10 +109,10 @@ session_start();
           <?php
           if(isset($_GET['product_id'])){
             $product_id = $_GET["product_id"];
-            $select = "SELECT * FROM `products` WHERE `product_Id` = '$product_id' ";
+            $select = "SELECT * FROM `products` WHERE `product_id` = '$product_id' ";
             $result = mysqli_query($conn,$select);
             $rowdata = mysqli_fetch_assoc($result);
-            $ID = $rowdata['product_Id'];
+            $ID = $rowdata['product_id'];
             $name = $rowdata['product_title'];
             $Description = $rowdata['product_description'];
             $image = $rowdata['Image_1'];
