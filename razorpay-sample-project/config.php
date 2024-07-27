@@ -2,8 +2,8 @@
 // Razorpay API configuration
 
 $razorpay_config = array(
-    'api_key' => 'rzp_test_kvb0UFhw0sxNtk',
-    'api_secret' => 'W9n8S2yNUU94MxOn8tydLznT',
+    'api_key' => 'rzp_test_Y2wy8t1wD1AFaA',
+    'api_secret' => 'zSqRMpIa2ljBBpkieFYGmfLa',
 );
 
 // Other configurations, if needed

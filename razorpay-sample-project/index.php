@@ -1,15 +1,4 @@
 <?php
-  
-    include("../db.php");
-   include("../CommonFunction.php");
-   session_start();
-   
-
-
-
-
-
-
 // Include the Razorpay PHP library
 require('razorpay-php/Razorpay.php');
 use Razorpay\Api\Api;
@@ -21,17 +10,16 @@ $api_secret = 'zSqRMpIa2ljBBpkieFYGmfLa';
 $api = new Api($api_key, $api_secret);
 // Create an order
 $order = $api->order->create([
-    'amount' => 9900 , // amount in paise (100 paise = 1 rupee)
+    'amount' => 9900, // amount in paise (100 paise = 1 rupee)
     'currency' => 'INR',
-    'receipt' => ""
+    'receipt' => 'order_receipt_12asa3'
 ]);
 // Get the order ID
-$order_id = $order->id ;
+$order_id = $order->id;
 
 // Set your callback URL
-// $callback_url = "http://localhost:8000/success.html";
-$callback_url = "http://localhost/Sakshi-kirana-Store/razorpay-sample-project/success.php";
-// C:\xampp\htdocs\Sakshi-kirana-Store\razorpay-sample-project\success.html
+$callback_url = "http://localhost:8000/success.html";
+
 // Include Razorpay Checkout.js library
 echo '<script src="https://checkout.razorpay.com/v1/checkout.js"></script>';
 
@@ -45,7 +33,7 @@ echo '<script>
             key: "' . $api_key . '",
             amount: ' . $order->amount . ',
             currency: "' . $order->currency . '",
-            name: "Sakshi Kirana Store",
+            name: "Your Company Name",
             description: "Payment for your order",
             image: "https://cdn.razorpay.com/logos/GhRQcyean79PqE_medium.png",
             order_id: "' . $order_id . '",
@@ -59,10 +47,4 @@ echo '<script>
         rzp.open();
     }
 </script>';
-
-
-
-
-
-
 ?>
