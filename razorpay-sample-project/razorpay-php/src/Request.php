@@ -2,12 +2,13 @@
 
 namespace Razorpay\Api;
 
-use Requests;
+
+
+use WpOrg\Requests\Requests; // Use the correct namespace
 use Exception;
-use Requests_Hooks;
+use WpOrg\Requests\Hooks as Requests_Hooks;
 use Razorpay\Api\Errors;
 use Razorpay\Api\Errors\ErrorCode;
-
 
 // Available since PHP 5.5.19 and 5.6.3
 // https://git.io/fAMVS | https://secure.php.net/manual/en/curl.constants.php

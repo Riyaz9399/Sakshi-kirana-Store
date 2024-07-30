@@ -29,13 +29,13 @@ function getproduct(){
                         $Date = $rowdata['Date'];
                         $Status = $rowdata['Status'];
                         
-                        echo "<div class='col-md-4 mb-1' >
+                        echo "<div class='col-md-4 mb-2' >
                                   <div class='card'>
                                     <img class='card-img-top' src='admin/products_images/$Image_1' alt='$cardTitle'>
                                     <div class='card-body'>
                                       <h5 class='card-title'>$cardTitle</h5>
-                                      <p class='card-text'>$carddescription</p>
-                                      <p class='card-text'> Price: $product_Price/- </p>
+                                     
+                                      <p class='card-text fst-italic'> Price: $product_Price/- </p>
                                       <a href='index.php?add_Cart=$product_Id' class='btn btn-primary'>ADD CART</a>
                                       <a href='products_Details.php?product_id=$product_Id' class='btn btn-secondary'>View Details </a>
                                     </div>
@@ -79,8 +79,8 @@ function getproduct(){
                                             <img class='card-img-top' src='admin/products_images/$Image_1' alt='$cardTitle'>
                                             <div class='card-body'>
                                               <h5 class='card-title'>$cardTitle</h5>
-                                              <p class='card-text'>$carddescription</p>
-                                              <p class='card-text'> Price: $product_Price/- </p>
+                                              
+                                              <p class='card-text fst-italic'> Price: $product_Price/- </p>
                                               <a href='index.php?add_Cart= $product_Id' class='btn btn-primary'>Add Cart</a>
                                               <a href='#' class='btn btn-secondary'>View Details </a>
                                             </div>
@@ -126,8 +126,8 @@ function getproduct(){
                                           <img class='card-img-top' src='admin/products_images/$Image_1' alt='$cardTitle'>
                                           <div class='card-body'>
                                             <h5 class='card-title'>$cardTitle</h5>
-                                            <p class='card-text'>$carddescription</p>
-                                            <p class='card-text'> Price: $product_Price/- </p>
+                                          
+                                            <p class='card-text fst-italic'> Price: $product_Price/- </p>
                                             <a href='index.php?add_Cart= $product_Id' class='btn btn-primary'>Add Cart</a>
                                             <a href='#' class='btn btn-secondary'>View Details</a>
                                           </div>
@@ -138,6 +138,45 @@ function getproduct(){
        }          
 
   };
+
+// display all products 
+  function getAllproduct(){
+    global $conn;
+    // condition to check isset or not
+    if(!isset($_GET['categories'])){
+        if(!isset($_GET['brands'])){
+             $selectcardDetails = "SELECT * FROM `products`  ";
+                      $result = mysqli_query($conn,$selectcardDetails);
+                     while ($rowdata = mysqli_fetch_assoc($result)){
+                        $cardpicture = $rowdata['Image_1'];
+                        $product_Id = $rowdata['product_id'];
+                        $cardTitle = $rowdata['product_title'];
+                        $carddescription = $rowdata['product_description'];
+                        $product_Price = $rowdata['product_price'];
+                        $product_keyword = $rowdata['product_keyword'];
+                        $categories_Id = $rowdata['categories_Id'];
+                        $brands_Id = $rowdata['brands_Id'];
+                        $Image_1 = $rowdata['Image_1'];
+                        // $base64Image = base64_encode($Image_1);
+                        $Date = $rowdata['Date'];
+                        $Status = $rowdata['Status'];
+                        
+                        echo "<div class='col-md-4 mb-2' >
+                                  <div class='card'>
+                                    <img class='card-img-top' src='admin/products_images/$Image_1' alt='$cardTitle'>
+                                    <div class='card-body'>
+                                      <h5 class='card-title'>$cardTitle</h5>
+                                      <p class='card-text fst-italic'> Price: $product_Price/- </p>
+                                      <a href='index.php?add_Cart=$product_Id' class='btn btn-primary'>ADD CART</a>
+                                      <a href='products_Details.php?product_id=$product_Id' class='btn btn-secondary'>View Details </a>
+                                    </div>
+                                  </div>
+                              </div>";
+
+                    }     
+        }
+    }
+};
 
 
 
@@ -163,7 +202,7 @@ function getproduct(){
         $selectcategories = "SELECT * FROM `categories`";
         $result = mysqli_query($conn, $selectcategories);
         while ($rowdata = mysqli_fetch_assoc($result)){
-          $category_id = $rowdata['categories_Id'];
+          $category_id = $rowdata['categories_ID'];
           $category_title = $rowdata['catedories_title'];
           echo "<li class='nav-item' >
             <a href='index.php?category=$category_id' class='nav-link text-light '><h6>$category_title</h6></a>
@@ -210,7 +249,7 @@ function getproduct(){
                                     <img class='card-img-top' src='admin/products_images/$Image_1' alt='$cardTitle'>
                                     <div class='card-body'>
                                       <h5 class='card-title'>$cardTitle</h5>
-                                      <p class='card-text'>$carddescription</p>
+                                       <p class='card-text fst-italic'> Price: $product_Price/- </p>
                                       <a href='index.php?add_Cart= $product_Id' class='btn btn-primary'>Add Cart</a>
                                       <a href='#' class='btn btn-secondary'>View Details</a>
                                     </div>
@@ -261,7 +300,7 @@ function getproduct(){
         window.location.href = 'index.php';
         </script>";
       }else {
-        $insert_query = "INSERT INTO `carts_detail`(`product_Id`, `Ip_Address`, `quantity`) VALUES ('$get_product_Id','$ip','0')";
+        $insert_query = "INSERT INTO `carts_detail`(`product_Id`, `Ip_Address`, `quantity`) VALUES ('$get_product_Id','$ip','1')";
         $result = mysqli_query($conn,$insert_query);
         echo "<script>alert('Item is added in the cart ');  window.location.href = 'index.php'; </script>";
       }
